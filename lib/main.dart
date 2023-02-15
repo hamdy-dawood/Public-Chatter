@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';
 import 'helper/navigate_to_page.dart';
+import 'pages/forget_password_page.dart';
 import 'pages/splash_page.dart';
+import 'pages/verify_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +43,9 @@ class ScholarChat extends StatelessWidget {
         LoginPage.id: (context) => const LoginPage(),
         SplashPage.id: (context) => const SplashPage(),
         RegisterPage.id: (context) => const RegisterPage(),
-        ChatPage.id: (context) => ChatPage()
+        ForgetPasswordPage.id: (context) => const ForgetPasswordPage(),
+        VerifyPage.id: (context) => const VerifyPage(),
+        ChatPage.id: (context) => ChatPage(),
       },
       initialRoute: SplashPage.id,
       // home: SplashPage(),

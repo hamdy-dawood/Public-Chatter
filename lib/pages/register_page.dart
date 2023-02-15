@@ -7,7 +7,7 @@ import '../helper/navigate_to_page.dart';
 import '../helper/show_snack_bar.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
-import 'chat_page.dart';
+import 'verify_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  String?  email, password;
+  String? name, email, password;
   bool isLoading = false;
   GlobalKey<FormState> formKey = GlobalKey();
   bool isPassword = true;
@@ -54,22 +54,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: TextStyle(
                       fontSize: 24,
                       color: kPrimaryColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                // CustomFormTextField(
-                //   onChanged: (data) {
-                //     name = data;
-                //   },
-                //   label: 'Name',
-                // ),
-                const SizedBox(
-                  height: 10,
-                ),
                 CustomFormTextField(
+                  keyboardType: TextInputType.emailAddress,
                   onChanged: (data) {
                     email = data;
                   },
@@ -104,23 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     if (formKey.currentState!.validate()) {
                       isLoading = true;
                       setState(() {});
-                      try {
-                        await registerUser();
-                        navigateTo(
-                            page: ChatPage.id,
-                            arguments: email,
-                            withHistory: false);
-                      } on FirebaseAuthException catch (ex) {
-                        if (ex.code == 'weak-password') {
-                          showSnackBar(context, 'weak password');
-                        } else if (ex.code == 'email-already-in-use') {
-                          showSnackBar(context, 'email already exists');
-                        } else {
-                          showSnackBar(context, 'there was an error');
-                        }
-                      } catch (ex) {
-                        showSnackBar(context, 'there was an error');
-                      }
+                      await registerUser();
 
                       isLoading = false;
                       setState(() {});
@@ -161,7 +138,20 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> registerUser() async {
-    UserCredential user = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email!, password: password!);
+    try {
+      UserCredential user = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email!, password: password!);
+      navigateTo(page: VerifyPage.id, arguments: email);
+    } on FirebaseAuthException catch (ex) {
+      if (ex.code == 'weak-password') {
+        showSnackBar(context, 'weak password');
+      } else if (ex.code == 'email-already-in-use') {
+        showSnackBar(context, 'email already exists');
+      } else {
+        showSnackBar(context, 'there was an error');
+      }
+    } catch (ex) {
+      showSnackBar(context, 'there was an error');
+    }
   }
 }

@@ -8,7 +8,6 @@ class ChatBubble extends StatelessWidget {
     Key? key,
     required this.message,
   }) : super(key: key);
-
   final Message message;
 
   @override
@@ -17,22 +16,35 @@ class ChatBubble extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Container(
         padding:
-            const EdgeInsets.only(left: 16, top: 18, bottom: 18, right: 32),
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            const EdgeInsets.symmetric(horizontal: 12,vertical: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
-            bottomRight: Radius.circular(15),
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
+            bottomRight: Radius.circular(12),
           ),
           color: kPrimaryColor,
         ),
-        child: Text(
-          message.message,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              message.id,
+              style:  const TextStyle(
+                color: Colors.deepPurple,
+                fontSize: 15,
+              ),
+            ),
+            const SizedBox(height: 5,),
+            Text(
+              message.message,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -44,7 +56,6 @@ class ChatBubbleForFriend extends StatelessWidget {
     Key? key,
     required this.message,
   }) : super(key: key);
-
   final Message message;
 
   @override
@@ -53,22 +64,35 @@ class ChatBubbleForFriend extends StatelessWidget {
       alignment: Alignment.centerRight,
       child: Container(
         padding:
-            const EdgeInsets.only(left: 16, top: 18, bottom: 18, right: 32),
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            const EdgeInsets.symmetric(horizontal: 12,vertical: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
-            bottomLeft: Radius.circular(15),
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
+            bottomLeft: Radius.circular(12),
           ),
           color: Color(0xff006D84),
         ),
-        child: Text(
-          message.message,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              message.id,
+              style:  TextStyle(
+                color: Colors.orange[300],
+                fontSize: 15,
+              ),
+            ),
+            const SizedBox(height: 5,),
+            Text(
+              message.message,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+          ],
         ),
       ),
     );

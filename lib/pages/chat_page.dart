@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../helper/navigate_to_page.dart';
 import '../models/message.dart';
 import '../widgets/chat_bubble.dart';
+import 'login_page.dart';
 
 class ChatPage extends StatelessWidget {
   static String id = 'ChatPage';
@@ -39,6 +42,14 @@ class ChatPage extends StatelessWidget {
                     letterSpacing: 1.5),
               ),
               centerTitle: true,
+              actions: [
+                IconButton(
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                      navigateTo(page: LoginPage.id, withHistory: false);
+                    },
+                    icon: Icon(Icons.logout))
+              ],
             ),
             body: Column(
               children: [
@@ -52,7 +63,9 @@ class ChatPage extends StatelessWidget {
                             ? ChatBubble(
                                 message: messagesList[index],
                               )
-                            : ChatBubbleForFriend(message: messagesList[index]);
+                            : ChatBubbleForFriend(
+                                message: messagesList[index],
+                              );
                       }),
                 ),
                 Padding(
@@ -69,7 +82,7 @@ class ChatPage extends StatelessWidget {
                               {
                                 kMessage: textController.text,
                                 kCreatedAt: DateTime.now(),
-                                'id': email
+                                'id': email,
                               },
                             );
                             textController.clear();
@@ -86,6 +99,7 @@ class ChatPage extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
+                      focusColor: kPrimaryColor,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
                         borderSide: const BorderSide(

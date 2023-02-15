@@ -1,4 +1,5 @@
 import 'package:chats_app/helper/navigate_to_page.dart';
+import 'package:chats_app/pages/forget_password_page.dart';
 import 'package:chats_app/pages/register_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,8 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> formKey = GlobalKey();
   String? email, password;
   bool isPassword = true;
+
+  // bool isEmailVerified = false;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       fontSize: 24,
                       color: kPrimaryColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -62,6 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 20,
                 ),
                 CustomFormTextField(
+                  keyboardType: TextInputType.emailAddress,
                   onChanged: (data) {
                     email = data;
                   },
@@ -91,7 +96,11 @@ class _LoginPageState extends State<LoginPage> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      navigateTo(
+                        page: ForgetPasswordPage.id,
+                      );
+                    },
                     child: const Text(
                       'Forget password?',
                       style: TextStyle(
@@ -108,24 +117,8 @@ class _LoginPageState extends State<LoginPage> {
                     if (formKey.currentState!.validate()) {
                       isLoading = true;
                       setState(() {});
-                      try {
-                        await loginUser();
-                        navigateTo(
-                            page: ChatPage.id,
-                            arguments: email,
-                            withHistory: false);
-                      } on FirebaseAuthException catch (ex) {
-                        if (ex.code == 'user-not-found') {
-                          showSnackBar(context, 'user not found');
-                        } else if (ex.code == 'wrong-password') {
-                          showSnackBar(context, 'wrong password');
-                        } else {
-                          showSnackBar(context, 'there was an error');
-                        }
-                      } catch (ex) {
-                        print(ex);
-                        showSnackBar(context, 'there was an error');
-                      }
+
+                      await loginUser();
 
                       isLoading = false;
                       setState(() {});
@@ -171,7 +164,27 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> loginUser() async {
-    UserCredential user = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email!, password: password!);
+    try {
+       bool? isEmailVerified =FirebaseAuth.instance.currentUser?.emailVerified;
+
+      UserCredential user = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email!, password: password!);
+      if (isEmailVerified == true) {
+        navigateTo(page: ChatPage.id, arguments: email, withHistory: false);
+      } else {
+        showSnackBar(context, 'Please verify your acc.');
+      }
+    } on FirebaseAuthException catch (ex) {
+      if (ex.code == 'user-not-found') {
+        showSnackBar(context, 'user not found');
+      } else if (ex.code == 'wrong-password') {
+        showSnackBar(context, 'wrong password');
+      } else {
+        showSnackBar(context, 'there was an error');
+      }
+    } catch (ex) {
+      print(ex);
+      showSnackBar(context, 'there was an error');
+    }
   }
 }
