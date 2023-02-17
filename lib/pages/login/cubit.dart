@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'login_state.dart';
+part 'state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitialState());
@@ -16,7 +16,7 @@ class LoginCubit extends Cubit<LoginState> {
           .signInWithEmailAndPassword(email: email, password: password);
 
       if (isEmailVerified == true) {
-        emit(LoginSuccessState(stateMsg: "Login Success"));
+        emit(LoginSuccessState());
       } else {
         emit(LoginFailureState(stateMsg: 'Please verify your acc.'));
       }

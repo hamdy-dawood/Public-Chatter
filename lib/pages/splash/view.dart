@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:chats_app/constants.dart';
-import 'package:chats_app/pages/login/login_view.dart';
+import 'package:chats_app/pages/login/view.dart';
 import 'package:flutter/material.dart';
 
-import '../helper/navigate_to_page.dart';
+import '../../helper/navigate_to_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);

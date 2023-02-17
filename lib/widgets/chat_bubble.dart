@@ -7,16 +7,17 @@ class ChatBubble extends StatelessWidget {
   const ChatBubble({
     Key? key,
     required this.message,
+    required this.icon,
   }) : super(key: key);
   final Message message;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
-        padding:
-            const EdgeInsets.symmetric(horizontal: 12,vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -31,18 +32,33 @@ class ChatBubble extends StatelessWidget {
           children: [
             Text(
               message.id,
-              style:  const TextStyle(
+              style: const TextStyle(
                 color: Colors.deepPurple,
                 fontSize: 15,
               ),
             ),
-            const SizedBox(height: 5,),
-            Text(
-              message.message,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  icon,
+                  color: Colors.deepPurple,
+                  size: 15,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  message.message,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -55,16 +71,17 @@ class ChatBubbleForFriend extends StatelessWidget {
   const ChatBubbleForFriend({
     Key? key,
     required this.message,
+    required this.icon,
   }) : super(key: key);
   final Message message;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        padding:
-            const EdgeInsets.symmetric(horizontal: 12,vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -79,18 +96,33 @@ class ChatBubbleForFriend extends StatelessWidget {
           children: [
             Text(
               message.id,
-              style:  TextStyle(
+              style: TextStyle(
                 color: Colors.orange[300],
                 fontSize: 15,
               ),
             ),
-            const SizedBox(height: 5,),
-            Text(
-              message.message,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  message.message,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Icon(
+                  icon,
+                  color: Colors.orange[300],
+                  size: 15,
+                ),
+              ],
             ),
           ],
         ),

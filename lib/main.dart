@@ -1,16 +1,19 @@
-import 'package:chats_app/pages/chat_page.dart';
-import 'package:chats_app/pages/login/login_cubit.dart';
-import 'package:chats_app/pages/login/login_view.dart';
-import 'package:chats_app/pages/register_page.dart';
+import 'package:chats_app/pages/chat/cubit.dart';
+import 'package:chats_app/pages/chat/view.dart';
+import 'package:chats_app/pages/login/cubit.dart';
+import 'package:chats_app/pages/login/view.dart';
+import 'package:chats_app/pages/register/cubit.dart';
+import 'package:chats_app/pages/register/view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'firebase_options.dart';
 import 'helper/navigate_to_page.dart';
-import 'pages/forget_password_page.dart';
-import 'pages/splash_page.dart';
-import 'pages/verify_page.dart';
+import 'pages/forget_password/cubit.dart';
+import 'pages/forget_password/view.dart';
+import 'pages/splash/view.dart';
+import 'pages/verify/view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,8 +37,21 @@ class ScholarChat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LoginCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => LoginCubit(),
+        ),
+        BlocProvider(
+          create: (context) => RegisterCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ForgetPasswordCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ChatCubit(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Public Chatter",
@@ -46,8 +62,8 @@ class ScholarChat extends StatelessWidget {
         routes: {
           LoginPage.id: (context) => LoginPage(),
           SplashPage.id: (context) => const SplashPage(),
-          RegisterPage.id: (context) => const RegisterPage(),
-          ForgetPasswordPage.id: (context) => const ForgetPasswordPage(),
+          RegisterPage.id: (context) => RegisterPage(),
+          ForgetPasswordPage.id: (context) => ForgetPasswordPage(),
           VerifyPage.id: (context) => const VerifyPage(),
           ChatPage.id: (context) => ChatPage(),
         },

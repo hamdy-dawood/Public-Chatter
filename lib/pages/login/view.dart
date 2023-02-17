@@ -1,7 +1,7 @@
 import 'package:chats_app/helper/navigate_to_page.dart';
-import 'package:chats_app/pages/forget_password_page.dart';
-import 'package:chats_app/pages/login/login_cubit.dart';
-import 'package:chats_app/pages/register_page.dart';
+import 'package:chats_app/pages/forget_password/view.dart';
+import 'package:chats_app/pages/login/cubit.dart';
+import 'package:chats_app/pages/register/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -10,7 +10,8 @@ import '../../constants.dart';
 import '../../helper/show_snack_bar.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_field.dart';
-import '../chat_page.dart';
+import '../chat/cubit.dart';
+import '../chat/view.dart';
 
 class LoginPage extends StatelessWidget {
   static String id = 'login page';
@@ -26,9 +27,9 @@ class LoginPage extends StatelessWidget {
         if (state is LoginLoadingState) {
           isLoading = true;
         } else if (state is LoginSuccessState) {
+          BlocProvider.of<ChatCubit>(context).getMessage();
           navigateTo(page: ChatPage.id, arguments: email, withHistory: false);
           isLoading = false;
-          showSnackBar(context, state.stateMsg);
         } else if (state is LoginFailureState) {
           isLoading = false;
           showSnackBar(context, state.stateMsg);
@@ -118,10 +119,9 @@ class LoginPage extends StatelessWidget {
                   CustomButton(
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
-                        BlocProvider.of<LoginCubit>(context).loginUser(
-                            email: email.toString(),
-                            password: password.toString());
-                      } else {}
+                        BlocProvider.of<LoginCubit>(context)
+                            .loginUser(email: email!, password: password!);
+                      }
                     },
                     text: 'LOGIN',
                   ),

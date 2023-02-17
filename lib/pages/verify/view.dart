@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:chats_app/helper/navigate_to_page.dart';
-import 'package:chats_app/pages/login/login_view.dart';
+import 'package:chats_app/pages/login/view.dart';
 import 'package:chats_app/widgets/custom_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../../constants.dart';
 
 class VerifyPage extends StatefulWidget {
   const VerifyPage({Key? key}) : super(key: key);
@@ -101,7 +101,7 @@ class _VerifyPageState extends State<VerifyPage> {
                   page: LoginPage.id,
                 );
               },
-              text: 'Back To LOGIN',
+              text: 'Back To Login',
             ),
           ],
         ),
