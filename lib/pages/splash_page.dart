@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:chats_app/constants.dart';
-import 'package:chats_app/pages/login_page.dart';
+import 'package:chats_app/pages/login/login_view.dart';
 import 'package:flutter/material.dart';
 
 import '../helper/navigate_to_page.dart';

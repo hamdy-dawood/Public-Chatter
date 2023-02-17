@@ -6,17 +6,17 @@ import '../constants.dart';
 import '../helper/navigate_to_page.dart';
 import '../models/message.dart';
 import '../widgets/chat_bubble.dart';
-import 'login_page.dart';
+import 'login/login_view.dart';
 
 class ChatPage extends StatelessWidget {
+  ChatPage({super.key});
+
   static String id = 'ChatPage';
   final _controller = ScrollController();
+  TextEditingController textController = TextEditingController();
 
   CollectionReference messages =
       FirebaseFirestore.instance.collection(kMessagesCollections);
-  TextEditingController textController = TextEditingController();
-
-  ChatPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class ChatPage extends StatelessWidget {
                       await FirebaseAuth.instance.signOut();
                       navigateTo(page: LoginPage.id, withHistory: false);
                     },
-                    icon: Icon(Icons.logout))
+                    icon: const Icon(Icons.logout))
               ],
             ),
             body: Column(
