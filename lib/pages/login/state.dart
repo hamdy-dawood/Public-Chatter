@@ -13,3 +13,5 @@ class LoginFailureState extends LoginState {
 
   LoginFailureState({required this.stateMsg});
 }
+
+class VisibilityChangeState extends LoginState {}

@@ -1,8 +1,6 @@
 import 'package:chats_app/pages/chat/cubit.dart';
 import 'package:chats_app/pages/chat/view.dart';
-import 'package:chats_app/pages/login/cubit.dart';
 import 'package:chats_app/pages/login/view.dart';
-import 'package:chats_app/pages/register/cubit.dart';
 import 'package:chats_app/pages/register/view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'firebase_options.dart';
 import 'helper/navigate_to_page.dart';
-import 'pages/forget_password/cubit.dart';
 import 'pages/forget_password/view.dart';
 import 'pages/splash/view.dart';
 import 'pages/verify/view.dart';
@@ -28,30 +25,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ScholarChat();
-  }
-}
-
-class ScholarChat extends StatelessWidget {
-  const ScholarChat({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => LoginCubit(),
-        ),
-        BlocProvider(
-          create: (context) => RegisterCubit(),
-        ),
-        BlocProvider(
-          create: (context) => ForgetPasswordCubit(),
-        ),
-        BlocProvider(
-          create: (context) => ChatCubit(),
-        ),
-      ],
+    return BlocProvider(
+      create: (context) => ChatCubit(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Public Chatter",

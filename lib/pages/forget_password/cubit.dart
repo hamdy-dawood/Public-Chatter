@@ -6,6 +6,8 @@ part 'state.dart';
 class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   ForgetPasswordCubit() : super(ForgetPasswordInitialState());
 
+  static ForgetPasswordCubit get(context) => BlocProvider.of(context);
+
   Future<void> resetPassword({required String email}) async {
     try {
       emit(ForgetPasswordLoadingState());

@@ -12,7 +12,6 @@ class CustomFormTextField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.autoValidate = AutovalidateMode.onUserInteraction,
     this.isLastInput = false,
-
   });
 
   final Function(String)? onChanged;

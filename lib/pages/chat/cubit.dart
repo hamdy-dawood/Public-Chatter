@@ -24,7 +24,7 @@ class ChatCubit extends Cubit<ChatState> {
         },
       );
     } on Exception catch (e) {
-      // TODO
+      emit(ChatFailureState());
     }
   }
 

@@ -86,7 +86,7 @@ class _VerifyPageState extends State<VerifyPage> {
             Center(
               child: Text(
                 '${user.email}',
-                style:  TextStyle(
+                style: TextStyle(
                   color: Colors.blue[800],
                   fontSize: 22,
                 ),

@@ -13,3 +13,5 @@ class RegisterFailureState extends RegisterState {
 
   RegisterFailureState({required this.stateMsg});
 }
+
+class VisibilityChangeState extends RegisterState {}

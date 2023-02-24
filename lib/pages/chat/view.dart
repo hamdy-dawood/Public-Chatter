@@ -16,14 +16,21 @@ class ChatPage extends StatelessWidget {
   final _controller = ScrollController();
   TextEditingController textController = TextEditingController();
   List<Message> messagesList = [];
+  bool isSent = false;
 
   @override
   Widget build(BuildContext context) {
-    var email = ModalRoute.of(context)!.settings.arguments;
+    var email = ModalRoute
+        .of(context)!
+        .settings
+        .arguments;
     return BlocConsumer<ChatCubit, ChatState>(
       listener: (context, state) {
         if (state is ChatSuccessState) {
+          isSent = true;
           messagesList = state.messages;
+        } else if (state is ChatFailureState) {
+          isSent = false;
         }
       },
       builder: (context, state) {
@@ -59,13 +66,13 @@ class ChatPage extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return messagesList[index].id == email
                           ? ChatBubble(
-                              message: messagesList[index],
-                              icon: Icons.call_made,
-                            )
+                        message: messagesList[index],
+                        icon: isSent ? Icons.done : Icons.error,
+                      )
                           : ChatBubbleForFriend(
-                              message: messagesList[index],
-                              icon: Icons.call_received,
-                            );
+                        message: messagesList[index],
+                        icon: isSent ? Icons.done : Icons.error,
+                      );
                     }),
               ),
               Padding(
@@ -76,8 +83,7 @@ class ChatPage extends StatelessWidget {
                     hintText: 'Send Message',
                     suffixIcon: IconButton(
                       onPressed: () {
-                        if (textController.text == "") {
-                        } else {
+                        if (textController.text == "") {} else {
                           BlocProvider.of<ChatCubit>(context).sendMessage(
                               message: textController.text.toString(),
                               email: email.toString());

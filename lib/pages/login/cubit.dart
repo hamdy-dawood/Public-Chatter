@@ -6,11 +6,14 @@ part 'state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitialState());
 
+  static LoginCubit get(context) => BlocProvider.of(context);
+
+  bool isPassword = true;
+
   Future<void> loginUser(
       {required String email, required String password}) async {
     try {
       emit(LoginLoadingState());
-
       bool? isEmailVerified = FirebaseAuth.instance.currentUser?.emailVerified;
       UserCredential user = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
@@ -23,5 +26,10 @@ class LoginCubit extends Cubit<LoginState> {
     } on FirebaseAuthException catch (ex) {
       emit(LoginFailureState(stateMsg: ex.code.toString()));
     }
+  }
+
+  changeVisibility() {
+    isPassword = !isPassword;
+    emit(VisibilityChangeState());
   }
 }

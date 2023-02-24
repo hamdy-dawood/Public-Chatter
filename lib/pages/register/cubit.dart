@@ -6,6 +6,9 @@ part 'state.dart';
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(RegisterInitialState());
 
+  static RegisterCubit get(context) => BlocProvider.of(context);
+  bool isPassword = true;
+
   Future<void> registerUser({
     required String email,
     required String password,
@@ -19,5 +22,10 @@ class RegisterCubit extends Cubit<RegisterState> {
     } catch (e) {
       emit(RegisterFailureState(stateMsg: e.toString()));
     }
+  }
+
+  changeVisibility() {
+    isPassword = !isPassword;
+    emit(VisibilityChangeState());
   }
 }

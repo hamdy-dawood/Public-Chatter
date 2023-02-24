@@ -40,25 +40,20 @@ class ChatBubble extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  icon,
-                  color: Colors.deepPurple,
-                  size: 15,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  message.message,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
+            Text(
+              "  ${message.message}",
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Icon(
+              icon,
+              color: Colors.deepPurple,
+              size: 15,
             ),
           ],
         ),
@@ -104,25 +99,20 @@ class ChatBubbleForFriend extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  message.message,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Icon(
-                  icon,
-                  color: Colors.orange[300],
-                  size: 15,
-                ),
-              ],
+            Text(
+              "${message.message}  ",
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Icon(
+              icon,
+              color: Colors.orange[300],
+              size: 15,
             ),
           ],
         ),
